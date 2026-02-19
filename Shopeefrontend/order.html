@@ -2,98 +2,104 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Confirm Order - Pagariya Super Shop</title>
-
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>Your Orders - Pagariya Super Shop</title>
   <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-
-  <style>
-    .wrap{ max-width: 980px; margin: 40px auto; padding: 0 16px; }
-    .top{ display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap; }
-    .title{ font-size:30px; font-weight:900; margin:0; }
-    .sub{ color:#666; margin:6px 0 0; }
-    .grid{ display:grid; grid-template-columns: 1.6fr 1fr; gap:16px; margin-top:16px; }
-    .card{ background:#fff; border:1px solid #e6e6e6; border-radius:16px; padding:16px; box-shadow:0 8px 20px rgba(0,0,0,0.06); }
-    .row{ display:flex; justify-content:space-between; margin:8px 0; font-weight:600; }
-    .row.total{ border-top:1px solid #eee; margin-top:12px; padding-top:12px; font-weight:900; font-size:18px; }
-    .btn{ border:none; border-radius:12px; padding:12px 14px; font-weight:800; cursor:pointer; display:inline-flex; align-items:center; gap:10px; }
-    .btn-primary{ background:#52C41A; color:#fff; width:100%; justify-content:center; }
-    .btn-primary:hover{ filter:brightness(0.95); }
-    .btn-outline{ background:#fff; color:#2b7a0b; border:1px solid #52C41A; }
-    .btn-outline:hover{ background:rgba(82,196,26,0.08); }
-    .items{ margin-top:10px; }
-    .item{ display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid #f0f0f0; gap:10px; }
-    .item:last-child{ border-bottom:none; }
-    .note{ margin-top:12px; font-size:13px; color:#666; line-height:1.4; }
-    .locBox{ margin-top:10px; padding:10px; border:1px dashed #ddd; border-radius:12px; font-size:13px; color:#444; }
-    textarea{ width:100%; margin-top:8px; padding:10px; border-radius:12px; border:1px solid #ddd; resize:vertical; }
-    .toast{ position:fixed; bottom:24px; right:24px; background:#52C41A; color:#fff; padding:12px 14px; border-radius:12px; display:none; box-shadow:0 8px 20px rgba(0,0,0,0.15); z-index:9999; }
-    @media (max-width: 800px){ .grid{ grid-template-columns:1fr; } }
-  </style>
 </head>
-
 <body>
-  <header class="header sticky-header">
-    <div class="header-container">
-      <div class="logo-section">
-        <div class="logo-icon"><i class="fas fa-shopping-bag"></i></div>
-        <span class="brand-name">Pagariya Super Shop</span>
-      </div>
-      <nav class="nav-links">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="cart.html" class="nav-link">Cart</a>
-        <a href="myorders.html" class="nav-link">My Orders</a>
-      </nav>
-    </div>
-  </header>
 
-  <main class="wrap">
-    <div class="top">
-      <div>
-        <h1 class="title">Confirm Your Order</h1>
-        <p class="sub">Order save hoga + Owner ko Email jayega (redirect nahi).</p>
-      </div>
+  <main style="max-width:900px;margin:30px auto;padding:16px;">
+    <h1 style="text-align:center;">Your Orders</h1>
+    <p id="ordersSub" style="text-align:center;color:#666;">Loading...</p>
 
-      <a class="btn btn-outline" href="cart.html" style="text-decoration:none;">
-        <i class="fas fa-arrow-left"></i> Back to Cart
-      </a>
-    </div>
+    <div id="ordersContainer"></div>
 
-    <div class="grid">
-      <section class="card">
-        <h2 style="margin:0 0 10px; font-weight:900;">Items</h2>
-        <div id="order-items-container" class="items"></div>
-      </section>
-
-      <aside class="card">
-        <h2 style="margin:0 0 10px; font-weight:900;">Order Summary</h2>
-
-        <div class="row"><span>Subtotal</span><span id="order-subtotal">₹0.00</span></div>
-        <div class="row"><span>Delivery</span><span id="order-delivery">₹0.00</span></div>
-        <div class="row"><span>Discount</span><span id="order-discount">-₹0.00</span></div>
-        <div class="row total"><span>Total</span><span id="order-grand-total">₹0.00</span></div>
-
-        <button id="get-location-btn" class="btn btn-outline" type="button" style="width:100%; justify-content:center; margin-top:10px;">
-          <i class="fas fa-map-marker-alt"></i> Use My Location
-        </button>
-
-        <div class="locBox" id="locStatus">Location: Not set</div>
-        <textarea id="addressNote" rows="2" placeholder="Optional: Address note (landmark / society / area)"></textarea>
-
-        <button id="confirm-order-btn" class="btn btn-primary" type="button" style="margin-top:10px;">
-          <i class="fas fa-check"></i> Place Order (Email)
-        </button>
-
-        <p class="note">
-          ✅ Confirm दबाने के बाद order MongoDB में save होगा और owner को mail जाएगा.
-        </p>
-      </aside>
+    <div style="text-align:center;margin-top:20px;">
+      <button onclick="logoutUser()" style="background:#52C41A;color:#fff;border:none;padding:10px 16px;border-radius:10px;font-weight:800;">
+        Logout
+      </button>
     </div>
   </main>
 
-  <div id="toast" class="toast"></div>
+  <script>
+    const API_BASE = "http://localhost:5000";
 
-  <script src="order.js"></script>
+    function logoutUser() {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      location.href = "index.html";
+    }
+
+    async function loadOrders() {
+      const token = localStorage.getItem("token");
+      const sub = document.getElementById("ordersSub");
+      const box = document.getElementById("ordersContainer");
+
+      if (!token) {
+        sub.textContent = "Please login to view orders.";
+        box.innerHTML = `<div style="background:#fff;border:1px dashed #ccc;border-radius:14px;padding:18px;text-align:center;">
+          <p>You are not logged in.</p>
+          <a href="login.html" style="display:inline-block;margin-top:10px;background:#52C41A;color:#fff;padding:10px 16px;border-radius:10px;text-decoration:none;font-weight:800;">Login</a>
+        </div>`;
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API_BASE}/api/orders/my`, {
+          headers: { Authorization: "Bearer " + token }
+        });
+
+        const orders = await res.json();
+
+        if (!res.ok) {
+          sub.textContent = orders.message || "Could not load orders.";
+          return;
+        }
+
+        if (!Array.isArray(orders) || orders.length === 0) {
+          sub.textContent = "No orders yet.";
+          box.innerHTML = `<div style="background:#fff;border:1px dashed #ccc;border-radius:14px;padding:18px;text-align:center;">
+            <p>Your order history is empty.</p>
+            <a href="index.html" style="display:inline-block;margin-top:10px;background:#52C41A;color:#fff;padding:10px 16px;border-radius:10px;text-decoration:none;font-weight:800;">Start Shopping</a>
+          </div>`;
+          return;
+        }
+
+        sub.textContent = "Showing your recent orders ✅";
+
+        box.innerHTML = orders.map(o => {
+          const dt = new Date(o.createdAt).toLocaleString();
+          const items = (o.items || []).map(i => `<li><b>${i.name}</b> × ${i.quantity} — ₹${i.price}</li>`).join("");
+          return `
+            <div style="background:#fff;border:1px solid #eee;border-radius:14px;padding:16px;margin:12px 0;box-shadow:0 8px 20px rgba(0,0,0,0.06);">
+              <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;">
+                <div>
+                  <div style="font-weight:900;">Total: ₹${(o.total ?? 0).toFixed(2)}</div>
+                  <div style="color:#666;font-size:13px;margin-top:4px;">${dt}</div>
+                </div>
+                <div style="background:rgba(82,196,26,0.12);color:#2b7a0b;border:1px solid rgba(82,196,26,0.25);padding:6px 10px;border-radius:999px;font-weight:800;font-size:12px;">
+                  Order Placed
+                </div>
+              </div>
+
+              <ul style="margin-top:12px;padding-left:18px;">${items}</ul>
+
+              <div style="margin-top:12px;display:flex;gap:10px;flex-wrap:wrap;">
+                <span style="background:#f6f6f6;border:1px solid #eee;padding:6px 10px;border-radius:10px;">Subtotal: ₹${(o.subtotal ?? 0).toFixed(2)}</span>
+                <span style="background:#f6f6f6;border:1px solid #eee;padding:6px 10px;border-radius:10px;">Delivery: ₹${(o.deliveryCharge ?? 0).toFixed(2)}</span>
+                <span style="background:#f6f6f6;border:1px solid #eee;padding:6px 10px;border-radius:10px;">Discount: ₹${(o.discount ?? 0).toFixed(2)}</span>
+              </div>
+            </div>
+          `;
+        }).join("");
+
+      } catch {
+        sub.textContent = "Server not reachable / Network error";
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadOrders);
+  </script>
+
 </body>
 </html>
