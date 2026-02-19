@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Orders - Pagariya Super Shop</title>
+
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+  <style>
+    .orders-wrap {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .orders-title {
+      text-align: center;
+      font-size: 34px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .order-card {
+      background: #fff;
+      border-radius: 14px;
+      padding: 16px;
+      margin: 14px 0;
+      border: 1px solid #e6e6e6;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
+
+    .order-total {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .order-date {
+      font-size: 13px;
+      color: #666;
+    }
+
+    .empty-box {
+      text-align: center;
+      border: 1px dashed #ccc;
+      padding: 20px;
+      border-radius: 12px;
+    }
+
+    .empty-box a {
+      display: inline-block;
+      margin-top: 12px;
+      background: #52C41A;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .logout-btn {
+      background:#52C41A;
+      color:#fff;
+      border:none;
+      padding:10px 16px;
+      border-radius:10px;
+      font-weight:600;
+      cursor:pointer;
+      margin-left:12px;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header sticky-header">
+  <div class="header-container">
+    <div class="logo-section">
+      <div class="logo-icon">
+        <i class="fas fa-shopping-bag"></i>
+      </div>
+      <span class="brand-name">Pagariya Super Shop</span>
+    </div>
+
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="offers.html">Offers</a>
+      <a href="order.html">Orders</a>
+    </nav>
+
+    <button class="logout-btn" onclick="logoutUser()">Logout</button>
+  </div>
+</header>
+
+<!-- ORDERS SECTION -->
+<main class="orders-wrap">
+  <h1 class="orders-title">Your Orders</h1>
+  <div id="ordersContainer"></div>
+</main>
+
+<script>
+function logoutUser() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  location.href = "index.html";
+}
+
+async function loadOrders() {
+  const token = localStorage.getItem("token");
+  const container = document.getElementById("ordersContainer");
+
+  if (!token) {
+    container.innerHTML = `
+      <div class="empty-box">
+        <p>Please login first.</p>
+        <a href="login.html">Login</a>
+      </div>
+    `;
+    return;
+  }
+
+  try {
+    const res = await fetch("http://localhost:5000/api/orders/my", {
+      headers: {
+        Authorization: "Bearer " + token
+      }
+    });
+
+    const orders = await res.json();
+
+    if (!res.ok) {
+      container.innerHTML = `
+        <div class="empty-box">
+          <p>${orders.message || "Invalid token"}</p>
+          <a href="login.html">Login Again</a>
+        </div>
+      `;
+      return;
+    }
+
+    if (!Array.isArray(orders) || orders.length === 0) {
+      container.innerHTML = `
+        <div class="empty-box">
+          <p>Your order history is empty.</p>
+          <a href="index.html">Start Shopping</a>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = orders.map(order => `
+      <div class="order-card">
+        <div class="order-total">
+          Total: ₹${order.total || 0}
+        </div>
+        <div class="order-date">
+          ${new Date(order.createdAt).toLocaleString()}
+        </div>
+
+        <ul>
+          ${(order.items || []).map(i => `
+            <li>${i.name} × ${i.quantity} — ₹${i.price}</li>
+          `).join("")}
+        </ul>
+
+        <p>Subtotal: ₹${order.subtotal || 0}</p>
+        <p>Delivery: ₹${order.deliveryCharge || 0}</p>
+        <p>Discount: ₹${order.discount || 0}</p>
+      </div>
+    `).join("");
+
+  } catch (err) {
+    container.innerHTML = `
+      <div class="empty-box">
+        <p>Server not running.</p>
+      </div>
+    `;
+  }
+}
+
+document.addEventListener("DOMContentLoaded", loadOrders);
+</script>
+
+</body>
+</html>

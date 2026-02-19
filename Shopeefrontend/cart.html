@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Pagariya Super Shop</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Header/Navigation -->
+    <header class="header sticky-header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <span class="brand-name">Pagariya Super Shop</span>
+            </div>
+
+            <div class="search-section">
+                <input type="text" class="search-bar" placeholder="Search for groceries, staples...">
+                <button class="search-btn" type="button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+
+            <div class="nav-right">
+                <nav class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="#" class="nav-link">Categories</a>
+                    <a href="offers.html" class="nav-link">Offers</a>
+                    <a href="order.html" class="nav-link">Orders</a>
+                </nav>
+
+                <div class="icons-section">
+                    <button id="mapBtn" class="icon-btn location-btn" type="button" aria-label="Open location">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </button>
+
+                    <a href="login.html" class="icon-btn" aria-label="Login">
+                        <i class="fas fa-user"></i>
+                    </a>
+
+                    <!-- ✅ FIXED: closing tag is </a> not </button> -->
+                    <a href="cart.html" class="cart-btn" aria-label="Cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-badge">0</span>
+                    </a>
+                </div>
+            </div>
+
+            <button class="mobile-menu-btn" type="button" aria-label="Open menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Cart Page Content -->
+    <section class="cart-page">
+        <div class="cart-container">
+            <div class="cart-header">
+                <h1 class="cart-title">Shopping Cart</h1>
+                <a href="index.html" class="continue-shopping-link">
+                    <i class="fas fa-arrow-left"></i> Continue Shopping
+                </a>
+            </div>
+
+            <div class="cart-content">
+                <!-- Cart Items -->
+                <div class="cart-items-section">
+                    <div id="cart-items-container" class="cart-items-container">
+                        <!-- Cart items will be populated here -->
+                    </div>
+
+                    <div id="empty-cart-message" class="empty-cart-message" style="display: none;">
+                        <div class="empty-cart-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                        <h2>Your cart is empty</h2>
+                        <p>Start shopping to add items to your cart</p>
+                        <a href="index.html" class="cta-button">Continue Shopping</a>
+                    </div>
+                </div>
+
+                <!-- Cart Summary -->
+                <div class="cart-summary-section">
+                    <div class="cart-summary-card">
+                        <h3 class="summary-title">Order Summary</h3>
+
+                        <div class="summary-row">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">₹0</span>
+                        </div>
+
+                        <div class="summary-row">
+                            <span>Delivery Charge:</span>
+                            <span id="delivery-charge">₹0</span>
+                        </div>
+
+                        <div class="summary-row">
+                            <span>Discount:</span>
+                            <span id="discount" class="discount-text">-₹0</span>
+                        </div>
+
+                        <div class="summary-row total-row">
+                            <span>Grand Total:</span>
+                            <span id="grand-total" class="grand-total-amount">₹0</span>
+                        </div>
+
+                        <div class="free-delivery-threshold">
+                            <p id="delivery-message">Free delivery on orders above ₹500</p>
+                        </div>
+
+                        <button id="place-order-btn" class="place-order-btn" type="button" disabled>
+                            Place Order
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <div class="footer-logo-section">
+                    <div class="footer-logo-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <h3 class="footer-brand">Pagariya Super Shop</h3>
+                </div>
+                <p class="footer-description">
+                    Serving the community with fresh, premium groceries and daily essentials since 1995.
+                    Your satisfaction is our priority.
+                </p>
+            </div>
+
+            <div class="footer-column">
+                <h4 class="footer-column-title">Support</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Returns Policy</a></li>
+                    <li><a href="#">Shipping Info</a></li>
+                    <li><a href="#">Help Center</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4 class="footer-column-title">Connect</h4>
+                <div class="social-icons">
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">© 2024 Pagariya Super Shop. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="cart.js"></script>
+    <script src="map.js"></script>
+    <script src="auth-ui.js"></script>
+</body>
+</html>

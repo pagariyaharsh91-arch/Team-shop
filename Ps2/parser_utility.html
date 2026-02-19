@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Excel Parser Utility</title>
+    <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+    <h1>STOCK.xlsx Parser</h1>
+    <button onclick="parseExcel()">Parse STOCK.xlsx</button>
+    <pre id="output"></pre>
+
+    <script>
+        function parseExcel() {
+            fetch('./STOCK.xlsx')
+                .then(resp => resp.arrayBuffer())
+                .then(buf => {
+                    const data = new Uint8Array(buf);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const firstSheet = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[firstSheet];
+                    const raw = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+
+                    const products = raw.map((row, idx) => {
+                        const name = row['Product Name'] || row['Name'] || row['product_name'] || row['product'] || Object.values(row)[0] || '';
+                        const category = row['Category'] || row['category'] || row['Cat'] || row['Group'] || Object.values(row)[1] || 'Uncategorized';
+                        const priceRaw = row['Price'] || row['price'] || row['MRP'] || Object.values(row)[2] || '';
+                        const qtyRaw = row['Quantity'] || row['Qty'] || row['quantity'] || Object.values(row)[3] || '';
+
+                        const price = parseFloat(String(priceRaw).toString().replace(/[^0-9.\-]/g, '')) || 0;
+                        const quantity = qtyRaw === '' ? '' : (parseInt(String(qtyRaw).replace(/[^0-9\-]/g, '')) || 0);
+
+                        return {
+                            name: String(name).trim(),
+                            category: String(category).trim() || 'Uncategorized',
+                            price,
+                            quantity
+                        };
+                    }).filter(p => p.name);
+
+                    const grouped = {};
+                    products.forEach(p => {
+                        if (!grouped[p.category]) grouped[p.category] = [];
+                        grouped[p.category].push(p);
+                    });
+
+                    const output = {
+                        products,
+                        grouped,
+                        total_products: products.length,
+                        total_categories: Object.keys(grouped).length
+                    };
+
+                    document.getElementById('output').textContent = JSON.stringify(output, null, 2);
+                    console.log(JSON.stringify(output, null, 2));
+                })
+                .catch(err => {
+                    document.getElementById('output').textContent = 'Error: ' + err.message;
+                    console.error(err);
+                });
+        }
+    </script>
+</body>
+</html>

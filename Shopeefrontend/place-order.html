@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Order - Pagariya Super Shop</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header class="header sticky-header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <span class="brand-name">Pagariya Super Shop</span>
+            </div>
+
+            <div class="search-section">
+                <input type="text" class="search-bar" placeholder="Search for groceries, staples...">
+                <button class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+
+            <div class="nav-right">
+                <nav class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="#" class="nav-link">Categories</a>
+                    <a href="#" class="nav-link">Offers</a>
+                    <a href="#" class="nav-link">Orders</a>
+                </nav>
+                <div class="icons-section">
+                    <button class="icon-btn">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </button>
+                    <button class="icon-btn">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <button class="cart-btn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-badge">0</span>
+                    </button>
+                </div>
+            </div>
+
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Place Order Page -->
+    <section class="place-order-page">
+        <div class="place-order-container">
+            <!-- Page Header -->
+            <div class="place-order-header">
+                <h1 class="place-order-title">Place Order</h1>
+                <a href="cart.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i> Back to Cart
+                </a>
+            </div>
+
+            <div class="place-order-content">
+                <!-- Order Summary Section -->
+                <div class="order-summary-section">
+                    <h2 class="section-heading">Order Summary</h2>
+                    
+                    <div class="order-items-list">
+                        <div id="order-items-container">
+                            <!-- Order items will be populated here -->
+                        </div>
+                    </div>
+
+                    <div class="order-summary-details">
+                        <div class="summary-row">
+                            <span class="label">Subtotal:</span>
+                            <span class="value" id="po-subtotal">₹0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="label">Delivery Charge:</span>
+                            <span class="value" id="po-delivery">₹0</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="label">Discount:</span>
+                            <span class="value discount" id="po-discount">-₹0</span>
+                        </div>
+                        <div class="summary-divider"></div>
+                        <div class="summary-row grand-total">
+                            <span class="label">Grand Total:</span>
+                            <span class="value" id="po-grand-total">₹0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customer Details Form -->
+                <div class="customer-form-section">
+                    <h2 class="section-heading">Delivery Details</h2>
+                    
+                    <form id="place-order-form" class="place-order-form">
+                        <div class="form-group">
+                            <label for="po-name">Full Name <span class="required">*</span></label>
+                            <input 
+                                type="text" 
+                                id="po-name" 
+                                name="fullName" 
+                                placeholder="Enter your full name" 
+                                required
+                            >
+                            <span class="error-message" id="po-name-error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="po-mobile">Mobile Number <span class="required">*</span></label>
+                            <input 
+                                type="tel" 
+                                id="po-mobile" 
+                                name="mobile" 
+                                placeholder="Enter 10-digit mobile number" 
+                                maxlength="10"
+                                required
+                            >
+                            <span class="error-message" id="po-mobile-error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="po-address">Address / Location <span class="required">*</span></label>
+                            <textarea 
+                                id="po-address" 
+                                name="address" 
+                                placeholder="Enter your delivery address" 
+                                rows="3"
+                                required
+                            ></textarea>
+                            <span class="error-message" id="po-address-error"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="po-note">Special Instructions <span class="optional">(Optional)</span></label>
+                            <textarea 
+                                id="po-note" 
+                                name="note" 
+                                placeholder="Any special instructions or notes" 
+                                rows="2"
+                            ></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" id="po-back-btn" class="back-btn">
+                                <i class="fas fa-arrow-left"></i> Back
+                            </button>
+                            <button type="submit" class="confirm-btn">
+                                <i class="fas fa-check"></i> Confirm Order
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Success Message -->
+    <div id="po-success-message" class="success-toast" style="display: none;">
+        <div class="success-toast-content">
+            <i class="fas fa-check-circle"></i>
+            <p>Order sent on WhatsApp!</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <div class="footer-logo-section">
+                    <div class="footer-logo-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <h3 class="footer-brand">Pagariya Super Shop</h3>
+                </div>
+                <p class="footer-description">Serving the community with fresh, premium groceries and daily essentials since 1995. Your satisfaction is our priority.</p>
+            </div>
+
+            <div class="footer-column">
+                <h4 class="footer-column-title">Support</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Returns Policy</a></li>
+                    <li><a href="#">Shipping Info</a></li>
+                    <li><a href="#">Help Center</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4 class="footer-column-title">Connect</h4>
+                <div class="social-icons">
+                    <a href="#" class="social-link">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">© 2024 Pagariya Super Shop. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="place-order.js"></script>
+    <script src="auth-ui.js"></script>
+</body>
+</html>

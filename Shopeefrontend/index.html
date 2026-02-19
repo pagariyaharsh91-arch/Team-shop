@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagariya Super Shop - Fresh Groceries Delivered</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header/Navigation -->
+    <header class="header sticky-header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <span class="brand-name">Pagariya Super Shop</span>
+            </div>
+
+            <div class="search-section">
+                <input type="text" class="search-bar" placeholder="Search for groceries, staples...">
+                <button class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+
+            <div class="nav-right">
+                <nav class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="#" class="nav-link">Categories</a>
+                    <a href="offers.html" class="nav-link">Offers</a>
+                    <a href="order.html" class="nav-link">Orders</a>
+                </nav>
+                <div class="icons-section">
+                    <button id="mapBtn" class="icon-btn location-btn" aria-label="Open location">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </button>
+                    <a href="login.html" class="icon-btn" aria-label="Login">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <a href="cart.html" class="cart-btn" id="cartBtn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-badge" id="cartBadge">0</span>
+                    </a>
+                </div>
+            </div>
+
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Daily Essentials</h1>
+            <p class="hero-subtitle">Fresh and premium products delivered to your doorstep</p>
+        </div>
+    </section>
+
+    <!-- Product Grid Section -->
+    <section class="products-section">
+        <div class="section-header">
+            <h2 class="section-title">Top Picks for You</h2>
+            <a href="#" class="view-all-link">View all →</a>
+        </div>
+
+        <div class="products-grid">
+            <!-- Product 1: Amul Milk -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="images/products/amul-milk.jpg" alt="Amul Milk" onerror="this.src='images/products/placeholder.jpg'" class="product-image">
+                    <div class="badge badge-dairy">DAIRY FRESH</div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Amul Milk</h3>
+                    <p class="product-description">1L Pure Milk</p>
+                    <div class="product-footer">
+                        <span class="product-price">₹28</span>
+                        <button class="add-btn" data-product-id="1" data-product-name="Amul Milk" data-product-price="28">Add +</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 2: Basmati Rice -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="images/products/basmati-rice.jpg" alt="Basmati Rice" onerror="this.src='images/products/placeholder.jpg'" class="product-image">
+                    <div class="badge badge-bestseller">BEST SELLER</div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Basmati Rice</h3>
+                    <p class="product-description">Premium Quality</p>
+                    <div class="product-footer">
+                        <span class="product-price">₹120/kg</span>
+                        <button class="add-btn" data-product-id="2" data-product-name="Basmati Rice" data-product-price="120">Add +</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 3: Toor Dal -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="images/products/toor-dal.jpg" alt="Toor Dal" onerror="this.src='images/products/placeholder.jpg'" class="product-image">
+                    <div class="badge badge-dairy">DAIRY FRESH</div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Toor Dal</h3>
+                    <p class="product-description">Premium Grade</p>
+                    <div class="product-footer">
+                        <span class="product-price">₹160/kg</span>
+                        <button class="add-btn" data-product-id="3" data-product-name="Toor Dal" data-product-price="160">Add +</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 4: Organic Honey -->
+            <div class="product-card">
+                <div class="product-image-container">
+                    <img src="images/products/organic-honey.jpg" alt="Organic Honey" onerror="this.src='images/products/placeholder.jpg'" class="product-image">
+                    <div class="badge badge-bestseller">BEST SELLER</div>
+                </div>
+                <div class="product-info">
+                    <h3 class="product-name">Organic Honey</h3>
+                    <p class="product-description">Pure & Natural</p>
+                    <div class="product-footer">
+                        <span class="product-price">₹210</span>
+                        <button class="add-btn" data-product-id="4" data-product-name="Organic Honey" data-product-price="210">Add +</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <h2 class="features-title">Fresh & Premium Quality Guaranteed</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3 class="feature-name">Quality Assured</h3>
+                <p class="feature-description">Rigorous quality checks</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3 class="feature-name">Fast Delivery</h3>
+                <p class="feature-description">Within 60 mins delivery</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-truck"></i>
+                </div>
+                <h3 class="feature-name">Free Shipping</h3>
+                <p class="feature-description">On orders above ₹500</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Offers Section -->
+    <section id="offers" class="offers-section">
+        <div class="offers-container">
+            <div class="section-header">
+                <h2 class="section-title">Special Offers</h2>
+                <p class="section-subtitle">Earn rewards based on your yearly purchases</p>
+            </div>
+            <div id="offersGrid" class="offers-grid"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <div class="footer-logo-section">
+                    <div class="footer-logo-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <h3 class="footer-brand">Pagariya Super Shop</h3>
+                </div>
+                <p class="footer-description">Serving the community with fresh, premium groceries and daily essentials since 1995. Your satisfaction is our priority.</p>
+            </div>
+
+            <div class="footer-column">
+                <h4 class="footer-column-title">Support</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Returns Policy</a></li>
+                    <li><a href="#">Shipping Info</a></li>
+                    <li><a href="#">Help Center</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h4 class="footer-column-title">Connect</h4>
+                <div class="social-icons">
+                    <a href="#" class="social-link">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p class="copyright">© 2024 Pagariya Super Shop. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="map.js"></script>
+    <script src="auth-ui.js"></script>
+
+</body>
+</html>

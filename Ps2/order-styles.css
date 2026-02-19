@@ -1,0 +1,369 @@
+/* ==================== ORDER PAGE STYLES ==================== */
+
+.order-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    min-height: 60vh;
+}
+
+.order-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.order-header h1 {
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 12px;
+}
+
+.order-header p {
+    font-size: 16px;
+    color: var(--text-gray);
+}
+
+/* Empty Order State */
+.empty-order {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.empty-icon {
+    margin-bottom: 24px;
+    opacity: 0.5;
+}
+
+.empty-order h2 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+}
+
+.empty-order p {
+    color: var(--text-gray);
+    margin-bottom: 24px;
+}
+
+.btn-back-to-cart {
+    display: inline-block;
+    background-color: var(--primary-green);
+    color: var(--white);
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-back-to-cart:hover {
+    background-color: #45A018;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Order Content */
+.order-content {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 30px;
+}
+
+/* ==================== ORDER ITEMS SECTION ==================== */
+.order-items-section {
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+}
+
+.order-items-section h2 {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+}
+
+.order-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid #EEEEEE;
+}
+
+/* Order Item */
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background-color: var(--bg-cream);
+    border-radius: 8px;
+}
+
+.order-item-info {
+    flex: 1;
+}
+
+.order-item-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.order-item-qty {
+    font-size: 12px;
+    color: var(--text-gray);
+    margin-top: 4px;
+}
+
+.order-item-price {
+    font-weight: 700;
+    color: var(--text-dark);
+    text-align: right;
+}
+
+/* Order Total Section */
+.order-total-section {
+    background-color: var(--accent-light-green);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: var(--text-gray);
+    margin-bottom: 10px;
+}
+
+.total-row span:last-child {
+    font-weight: 600;
+}
+
+.total-divider {
+    height: 1px;
+    background-color: #D9D9D9;
+    margin: 10px 0;
+}
+
+.total-row.total {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 0;
+}
+
+/* ==================== ORDER FORM SECTION ==================== */
+.order-form-section {
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: var(--shadow);
+    height: fit-content;
+    position: sticky;
+    top: 100px;
+}
+
+.order-form-section h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+}
+
+.order-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 10px;
+    border: 1px solid #EEEEEE;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--text-dark);
+    transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-green);
+    box-shadow: 0 0 0 3px rgba(82, 196, 26, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* Checkbox */
+.form-group.checkbox {
+    flex-direction: row;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.form-group.checkbox input {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    cursor: pointer;
+}
+
+.form-group.checkbox label {
+    cursor: pointer;
+    margin: 0;
+}
+
+.btn-place-order {
+    background-color: var(--primary-green);
+    color: var(--white);
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: all 0.3s ease;
+}
+
+.btn-place-order:hover {
+    background-color: #45A018;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-place-order:active {
+    transform: translateY(0);
+}
+
+.order-message {
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 13px;
+    margin-top: 12px;
+}
+
+.order-message.success {
+    background-color: #F0F8E8;
+    color: #52C41A;
+    border-left: 4px solid #52C41A;
+}
+
+.order-message.error {
+    background-color: #FFF1F0;
+    color: #FF4D4F;
+    border-left: 4px solid #FF4D4F;
+}
+
+/* ==================== RESPONSIVE STYLES ==================== */
+@media (max-width: 1024px) {
+    .order-content {
+        grid-template-columns: 1fr;
+    }
+
+    .order-form-section {
+        position: static;
+    }
+}
+
+@media (max-width: 768px) {
+    .order-container {
+        padding: 20px;
+    }
+
+    .order-header h1 {
+        font-size: 28px;
+    }
+
+    .order-items-section,
+    .order-form-section {
+        padding: 16px;
+    }
+
+    .order-item {
+        padding: 10px;
+    }
+
+    .order-item-name {
+        font-size: 13px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    .btn-place-order {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .order-header h1 {
+        font-size: 24px;
+    }
+
+    .order-form-section h2,
+    .order-items-section h2 {
+        font-size: 16px;
+    }
+
+    .order-item {
+        padding: 8px;
+        font-size: 12px;
+    }
+
+    .form-group label {
+        font-size: 12px;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 8px;
+        font-size: 13px;
+    }
+
+    .btn-place-order {
+        padding: 10px;
+        font-size: 13px;
+    }
+
+    .total-row {
+        font-size: 12px;
+    }
+
+    .total-row.total {
+        font-size: 14px;
+    }
+}
