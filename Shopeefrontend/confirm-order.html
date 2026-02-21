@@ -1,128 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Confirm Order</title>
-
-<link rel="stylesheet" href="styles.css">
-
-<style>
-body{
-  font-family: Arial, sans-serif;
-  background:#f6f7f9;
-}
-
-.confirm-container{
-  max-width:900px;
-  margin:40px auto;
-  padding:20px;
-}
-
-.order-card{
-  background:white;
-  border-radius:12px;
-  padding:25px;
-  box-shadow:0 4px 12px rgba(0,0,0,0.08);
-}
-
-h1{
-  text-align:center;
-  margin-bottom:20px;
-}
-
-.order-item{
-  display:flex;
-  justify-content:space-between;
-  padding:10px 0;
-  border-bottom:1px solid #eee;
-}
-
-input,textarea{
-  width:100%;
-  padding:12px;
-  margin:8px 0;
-  border-radius:8px;
-  border:1px solid #ccc;
-}
-
-textarea{
-  resize:none;
-}
-
-.summary{
-  margin-top:15px;
-}
-
-.summary p{
-  display:flex;
-  justify-content:space-between;
-}
-
-.total{
-  font-size:20px;
-  font-weight:bold;
-}
-
-.btn-row{
-  display:flex;
-  justify-content:space-between;
-  margin-top:20px;
-}
-
-.back-btn{
-  padding:10px 20px;
-  border-radius:8px;
-  border:1px solid #ccc;
-  background:white;
-  cursor:pointer;
-}
-
-.place-btn{
-  padding:12px 25px;
-  border-radius:8px;
-  border:none;
-  background:#22c55e;
-  color:white;
-  font-size:16px;
-  cursor:pointer;
-}
-
-.place-btn:hover{
-  background:#16a34a;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Order - Pagariya Super Shop</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="confirm-order.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-
 <body>
+    <!-- Header/Navigation -->
+    <header class="header sticky-header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <span class="brand-name">Pagariya Super Shop</span>
+            </div>
+            <div class="search-section">
+                <input type="text" class="search-bar" placeholder="Search for groceries, staples...">
+                <button class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div class="nav-right">
+                <nav class="nav-links">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="#" class="nav-link">Categories</a>
+                    <a href="offers.html" class="nav-link">Offers</a>
+                    <a href="order.html" class="nav-link">Orders</a>
+                </nav>
+                <div class="icons-section">
+                    <a href="cart.html" class="cart-btn" id="cartBtn">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-badge" id="cartBadge">0</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
 
-<div class="confirm-container">
+    <!-- Main Content -->
+    <div class="confirm-order-wrapper">
+        <div class="confirm-order-container">
+            <h1 class="confirm-title">Confirm Your Order</h1>
+            
+            <div class="order-main">
+                <!-- Left Column: Order Summary -->
+                <div class="order-summary-section">
+                    <div class="section-card">
+                        <h2 class="section-title">
+                            <i class="fas fa-list"></i> Order Summary
+                        </h2>
+                        
+                        <div id="order-items-container" class="order-items-list">
+                            <!-- Items dynamically populated here -->
+                        </div>
 
-<h1>Confirm Your Order</h1>
+                        <div class="order-summary">
+                            <div class="summary-row">
+                                <span>Subtotal</span>
+                                <span>₹<span id="order-subtotal">0</span></span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Delivery Charge</span>
+                                <span>₹<span id="order-delivery">0</span></span>
+                            </div>
+                            <div class="summary-row discount-row">
+                                <span>Discount</span>
+                                <span class="discount-text">-₹<span id="order-discount">0</span></span>
+                            </div>
+                            <div class="summary-row total-row">
+                                <span>Grand Total</span>
+                                <span class="total-amount">₹<span id="order-grand-total">0</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-<div class="order-card">
+                <!-- Right Column: Delivery Details -->
+                <div class="delivery-details-section">
+                    <div class="section-card">
+                        <h2 class="section-title">
+                            <i class="fas fa-map-marker-alt"></i> Delivery Details
+                        </h2>
+                        
+                        <form class="delivery-form" id="deliveryForm">
+                            <div class="form-group">
+                                <label for="custName" class="form-label">Full Name</label>
+                                <input 
+                                    type="text" 
+                                    id="custName" 
+                                    class="form-input" 
+                                    placeholder="Enter your full name"
+                                    required
+                                >
+                            </div>
 
-<div id="order-items-container"></div>
+                            <div class="form-group">
+                                <label for="custPhone" class="form-label">Phone Number</label>
+                                <input 
+                                    type="tel" 
+                                    id="custPhone" 
+                                    class="form-input" 
+                                    placeholder="Enter your phone number"
+                                    required
+                                >
+                            </div>
 
-<h3>Customer Details</h3>
+                            <div class="form-group">
+                                <label for="addressNote" class="form-label">Delivery Address</label>
+                                <textarea 
+                                    id="addressNote" 
+                                    class="form-textarea" 
+                                    placeholder="Enter your complete delivery address"
+                                    rows="5"
+                                    required
+                                ></textarea>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
-<input id="custName" placeholder="Full Name">
-<input id="custPhone" placeholder="Phone Number">
-<textarea id="custAddress" placeholder="Delivery Address"></textarea>
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="history.back()">
+                    <i class="fas fa-arrow-left"></i> Back to Cart
+                </button>
+                <button class="btn btn-primary" id="confirm-order-btn">
+                    <i class="fas fa-check-circle"></i> Place Order
+                </button>
+            </div>
+        </div>
+    </div>
 
-<div class="summary">
-<p>Subtotal: ₹<span id="order-subtotal">0</span></p>
-<p>Delivery: ₹<span id="order-delivery">0</span></p>
-<p class="total">Total: ₹<span id="order-grand-total">0</span></p>
-</div>
-
-<div class="btn-row">
-<button class="back-btn" onclick="history.back()">Back to Cart</button>
-<button class="place-btn" id="confirm-order-btn">Place Order</button>
-</div>
-
-</div>
-</div>
-
-<script src="confirm-order.js"></script>
+    <script src="confirm-order.js"></script>
 </body>
 </html>
