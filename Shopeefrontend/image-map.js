@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
             img.style.objectFit = 'cover';
             img.style.marginBottom = '8px';
             img.onerror = function() {
-                this.src = 'images/default.jpg';
+                this.src = 'images/default.png';
             };
             
             // Insert at the beginning of product-info
