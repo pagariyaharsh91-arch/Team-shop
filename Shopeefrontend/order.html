@@ -5,6 +5,24 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>Your Orders - Pagariya Super Shop</title>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    #ordersContainer > div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 40vh;
+      padding: 40px 18px !important;
+    }
+
+    #ordersContainer > div > p {
+      margin-bottom: 30px;
+    }
+
+    #ordersContainer > div > a {
+      margin-top: 20px !important;
+    }
+  </style>
 </head>
 <body>
 
@@ -100,6 +118,8 @@
 
     document.addEventListener("DOMContentLoaded", loadOrders);
   </script>
+
+  <script src="./auth-navbar.js"></script>
 
 </body>
 </html>
