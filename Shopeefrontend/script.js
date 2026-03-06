@@ -75,36 +75,32 @@ function renderProducts(products) {
     const card = document.createElement("div");
     card.className = "product-card";
 
-    // Convert product name to image filename (lowercase, hyphens)
-    const imageFileName = product.name.toLowerCase().replace(/\s+/g, '-') + '.jpg';
-    const imagePath = `images/products/${imageFileName}`;
+    const imagePath = product.image || "images/products/placeholder.jpg";
 
     card.innerHTML = `
       <div class="product-image-container">
-        <img src="${imagePath}" alt="${product.name}" onerror="this.src='images/products/placeholder.jpg'" class="product-image">
+        <img src="${imagePath}" alt="${product.name}" class="product-image">
         <div class="badge badge-bestseller">NEW</div>
       </div>
+
       <div class="product-info">
         <h3 class="product-name">${product.name}</h3>
-        <p class="product-description">${product.quantity > 0 ? `Stock: ${product.quantity}` : "Out of Stock"}</p>
+        <p class="product-description">
+          ${product.quantity > 0 ? `Stock: ${product.quantity}` : "Out of Stock"}
+        </p>
+
         <div class="product-footer">
           <span class="product-price">₹${product.price}</span>
+
           <button class="add-btn" ${product.quantity <= 0 ? "disabled" : ""}
-            data-product-id="${product._id}" 
-            data-product-name="${product.name}" 
+            data-product-id="${product._id}"
+            data-product-name="${product.name}"
             data-product-price="${product.price}">
             Add +
           </button>
         </div>
       </div>
     `;
-
-    const addBtn = card.querySelector(".add-btn");
-    if (addBtn && product.quantity > 0) {
-      addBtn.addEventListener("click", () => {
-        addProductToCart(product);
-      });
-    }
 
     container.appendChild(card);
   });
