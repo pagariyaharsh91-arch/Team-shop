@@ -103,6 +103,14 @@ function renderProducts(products) {
     `;
 
     container.appendChild(card);
+
+    // Attach event listener immediately after creating the button
+    const addBtn = card.querySelector(".add-btn");
+    if (addBtn) {
+      addBtn.addEventListener("click", () => {
+        addProductToCart(product);
+      });
+    }
   });
 }
 
@@ -148,26 +156,6 @@ function addProductToCart(product) {
   showNotification(`${product.name} added to cart`);
 }
 
-/* ================= ATTACH ADD BUTTONS ================= */
-function attachAddButtonListeners() {
-  document.querySelectorAll('.add-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const productId = btn.dataset.productId;
-      const productName = btn.dataset.productName;
-      const productPrice = parseFloat(btn.dataset.productPrice);
-      
-      if (productId && productName && productPrice) {
-        addProductToCart({
-          id: productId,
-          name: productName,
-          price: productPrice
-        });
-      }
-    });
-  });
-}
-
 /* ================= NOTIFICATION ================= */
 function showNotification(message) {
   const note = document.createElement("div");
@@ -195,7 +183,6 @@ window.addEventListener("resize", adjustHeaderForResponsive);
 document.addEventListener("DOMContentLoaded", () => {
   updateCartBadge();
   adjustHeaderForResponsive();
-  attachAddButtonListeners();
   fetchProducts();
 });
 
