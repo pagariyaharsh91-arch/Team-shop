@@ -1,77 +1,119 @@
 const API_BASE = "http://localhost:5000";
 
+/* ================= GET ORDER FROM STORAGE ================= */
+
 function getOrderFromStorage() {
   return JSON.parse(localStorage.getItem("pagariyaOrder") || "[]");
 }
 
+/* ================= RENDER ORDER ================= */
+
 function render() {
+
   const items = getOrderFromStorage();
 
-  const box = document.getElementById("order-items-container");
-  box.innerHTML = items.map(i => `
+  const container = document.getElementById("order-items-container");
+
+  if (!items.length) {
+    container.innerHTML = "<p>No items in order</p>";
+    return;
+  }
+
+  container.innerHTML = items.map(i => `
     <p><strong>${i.name}</strong> × ${i.quantity} — ₹${i.price * i.quantity}</p>
   `).join("");
 
-  const subtotal = items.reduce((s,i)=>s+i.price*i.quantity,0);
-  const delivery = subtotal>=500?0:30;
+  const subtotal = items.reduce((sum, i) => sum + i.price * i.quantity, 0);
+  const delivery = subtotal >= 500 ? 0 : 30;
   const discount = 0;
+  const total = subtotal + delivery - discount;
 
-  document.getElementById("order-subtotal").textContent=subtotal;
-  document.getElementById("order-delivery").textContent=delivery;
-  document.getElementById("order-discount").textContent=discount;
-  document.getElementById("order-grand-total").textContent=subtotal+delivery-discount;
+  document.getElementById("order-subtotal").textContent = `₹${subtotal}`;
+  document.getElementById("order-delivery").textContent = delivery === 0 ? "FREE" : `₹${delivery}`;
+  document.getElementById("order-discount").textContent = `₹${discount}`;
+  document.getElementById("order-grand-total").textContent = `₹${total}`;
 }
 
+/* ================= SAVE ORDER ================= */
+
 async function saveOrder() {
-  // Check if user is logged in
+
   const token = localStorage.getItem("token");
+
   if (!token) {
     alert("Please log in to place an order");
     window.location.href = "login.html";
     return;
   }
 
-  const name = document.getElementById("custName").value;
-  const phone = document.getElementById("custPhone").value;
-  const address = document.getElementById("addressNote").value;
+  const name = document.getElementById("custName").value.trim();
+  const phone = document.getElementById("custPhone").value.trim();
+  const address = document.getElementById("addressNote").value.trim();
 
-  if(!name||!phone||!address){
+  if (!name || !phone || !address) {
     alert("Please fill all details!");
     return;
   }
 
   const items = getOrderFromStorage();
 
-  try{
-    const res = await fetch(`${API_BASE}/api/orders`,{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json",
-        Authorization:"Bearer "+token
+  if (!items.length) {
+    alert("Your cart is empty");
+    return;
+  }
+
+  try {
+
+    const res = await fetch(`${API_BASE}/api/orders`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
       },
-      body:JSON.stringify({
+      body: JSON.stringify({
         items,
-        customer:{name,phone,address}
+        customerName: name,
+        phone: phone,
+        address: address
       })
     });
 
-    if(res.ok){
-      alert("Order placed successfully!");
+    const data = await res.json();
+
+    if (res.ok) {
+
+      alert("Order placed successfully! 🎉");
+
       localStorage.removeItem("pagariyaCart");
       localStorage.removeItem("pagariyaOrder");
+
       window.location.href = "index.html";
-    }else{
-      alert("Order failed");
+
+    } else {
+
+      console.error(data);
+      alert(data.message || "Order failed");
+
     }
 
-  }catch{
+  } catch (err) {
+
+    console.error(err);
     alert("Server error");
+
   }
 }
 
-document.addEventListener("DOMContentLoaded",()=>{
+/* ================= INIT ================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
   render();
-  document
-    .getElementById("confirm-order-btn")
-    .addEventListener("click",saveOrder);
+
+  const btn = document.getElementById("confirm-order-btn");
+
+  if (btn) {
+    btn.addEventListener("click", saveOrder);
+  }
+
 });
