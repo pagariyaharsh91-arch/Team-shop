@@ -1,221 +1,234 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pagariya Super Shop - Fresh & Premium Groceries</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pagariya Super Shop - Fresh & Premium Groceries</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
 
-<!-- Header -->
-<header class="header">
-<div class="header-container">
+  <script>
+    const token = localStorage.getItem("shopToken");
+    const shopData = JSON.parse(localStorage.getItem("shopData") || "null");
 
-<div class="logo-section">
-  <img src="image/logo.jpeg" class="logo-icon" alt="logo">
-  <span class="brand-name">I-GROCERY</span>
-</div>
-
-<div class="contact-header">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-</svg>
-<span><strong>+91 9119549440</strong></span>
-</div>
-
-<div class="nav-section">
-
-<button id="mapBtn" class="icon-btn location-btn">
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-<circle cx="12" cy="10" r="3"></circle>
-</svg>
-</button>
-
-<a href="cart.html" class="cart-btn">
-<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-<circle cx="9" cy="21" r="1"></circle>
-<circle cx="20" cy="21" r="1"></circle>
-<path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
-</svg>
-<span class="cart-badge" id="cartBadge">0</span>
-</a>
-
-</div>
-</div>
-</header>
-
-<!-- Hero -->
-<section class="hero">
-<h1>Fresh Groceries, Delivered Fast</h1>
-<p>Upload your STOCK.xlsx to see all products</p>
-</section>
-
-<!-- Upload Section -->
-<section class="upload-section">
-<div class="upload-container">
-<div class="upload-box">
-
-<h2>Upload STOCK.xlsx</h2>
-
-<input id="fileUpload" type="file" accept=".xlsx,.xls" style="display:none;">
-<button id="uploadBtn" class="btn btn-primary">Choose File</button>
-
-<p id="uploadStatus"></p>
-
-</div>
-</div>
-</section>
-
-<!-- No Products -->
-<div id="noProductsMsg">
-<h3>📦 Ready to Shop</h3>
-<p>Upload STOCK.xlsx above to load products</p>
-</div>
-
-<!-- Categories -->
-<section id="categoriesSection" style="display:none;">
-<h2>Shop by Category</h2>
-<div id="categoriesGrid"></div>
-</section>
-
-<!-- ================= ADMIN ORDERS ================= -->
-
-<section style="margin-top:40px">
-
-<div class="section-header">
-<h2>Customer Orders (Admin)</h2>
-</div>
-
-<div id="orders-container" style="max-width:900px;margin:auto;"></div>
-
-</section>
-
-<!-- Footer -->
-<footer class="footer">
-
-<div class="footer-content">
-
-<div class="footer-column">
-<div class="footer-logo">
-<div class="footer-logo-icon"></div>
-<span class="footer-brand">Pagariya Super Shop</span>
-</div>
-
-<p>Fresh groceries delivered to your doorstep since 1995.</p>
-</div>
-
-</div>
-
-<div class="footer-bottom">
-<p>&copy; 2024 Pagariya Super Shop</p>
-</div>
-
-</footer>
-
-
-<!-- Scripts -->
-
-<script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
-<script src="products-loader.js"></script>
-<script src="map.js"></script>
-
-<script>
-
-const ADMIN_API = "http://localhost:5000";
-
-/* LOAD ADMIN ORDERS */
-
-async function loadOrders(){
-
-  try{
-
-    const res = await fetch(`${ADMIN_API}/api/orders/admin`);
-    const orders = await res.json();
-
-    const container = document.getElementById("orders-container");
-
-    if(!orders.length){
-      container.innerHTML = "<p>No orders yet</p>";
-      return;
+    if (!token || !shopData) {
+      window.location.href = "shop-login.html";
     }
+  </script>
 
-    container.innerHTML = orders.map(order => {
+  <!-- Header -->
+  <header class="header">
+    <div class="header-container">
 
-      const items = order.items
-        .map(i => `${i.name} × ${i.quantity}`)
-        .join("<br>");
+      <div class="logo-section">
+        <img src="image/logo.jpeg" class="logo-icon" alt="logo" />
+        <span class="brand-name">I-GROCERY</span>
+      </div>
 
-      return `
-      <div style="border:1px solid #ddd;border-radius:10px;padding:20px;margin-top:20px;background:#fff">
+      <div class="contact-header">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+        </svg>
+        <span><strong>+91 9119549440</strong></span>
+      </div>
 
-        <h3>${order.customerName || "Customer"}</h3>
-
-        <p><b>Phone:</b> ${order.phone || "N/A"}</p>
-
-        <p><b>Items:</b><br>${items}</p>
-
-        <p><b>Total:</b> ₹${order.total}</p>
-
-        <p><b>Status:</b> ${order.status}</p>
-
-        <button onclick="markReady('${order._id}')"
-        style="padding:8px 14px;background:#52C41A;color:white;border:none;border-radius:6px;cursor:pointer">
-        Mark Ready
+      <div class="nav-section">
+        <button id="mapBtn" class="icon-btn location-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
         </button>
 
+        <a href="cart.html" class="cart-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          <span class="cart-badge" id="cartBadge">0</span>
+        </a>
+
+        <button onclick="logoutShop()" style="padding:8px 14px;border:none;background:#ff4d4f;color:#fff;border-radius:6px;cursor:pointer;">
+          Logout
+        </button>
       </div>
-      `;
 
-    }).join("");
+    </div>
+  </header>
 
-  }catch(err){
-    console.error("Order load error:",err);
-  }
+  <!-- Hero -->
+  <section class="hero">
+    <h1>Fresh Groceries, Delivered Fast</h1>
+    <p>Upload your STOCK.xlsx to see all products</p>
+    <p id="loggedInShop" style="text-align:center;font-weight:700;color:#ffffff;"></p>
+  </section>
 
-}
+  <!-- Upload Section -->
+  <section class="upload-section">
+    <div class="upload-container">
+      <div class="upload-box">
+        <h2>Upload STOCK.xlsx</h2>
 
+        <label
+          for="fileUpload"
+          id="uploadBtn"
+          class="btn btn-primary"
+          style="cursor:pointer;display:inline-block;"
+        >
+          Choose File
+        </label>
 
-/* MARK ORDER READY */
+        <input
+          id="fileUpload"
+          type="file"
+          accept=".xlsx,.xls"
+          style="display:none;"
+        />
 
-async function markReady(id){
+        <p id="uploadStatus"></p>
+      </div>
+    </div>
+  </section>
 
-  try{
+  <div id="noProductsMsg">
+    <h3>📦 Ready to Shop</h3>
+    <p>Upload STOCK.xlsx above to load products</p>
+  </div>
 
-    const res = await fetch(`${ADMIN_API}/api/orders/${id}/ready`,{
-      method:"PATCH"
-    });
+  <!-- Products -->
+  <section class="products-section">
+    <div class="section-header">
+      <h2 class="section-title">Top Picks for You</h2>
+    </div>
 
-    const data = await res.json();
+    <div class="products-grid" id="productsGrid"></div>
+  </section>
 
-    alert("Order marked ready");
+  <!-- Admin Orders -->
+  <section style="margin-top:40px">
+    <div class="section-header">
+      <h2>Customer Orders (Admin)</h2>
+    </div>
+    <div id="orders-container" style="max-width:900px;margin:auto;"></div>
+  </section>
 
-    if(data.whatsappUrl){
-      window.open(data.whatsappUrl, "_blank");
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-column">
+        <div class="footer-logo">
+          <div class="footer-logo-icon"></div>
+          <span class="footer-brand">Pagariya Super Shop</span>
+        </div>
+        <p>Fresh groceries delivered to your doorstep since 1995.</p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2024 Pagariya Super Shop</p>
+    </div>
+  </footer>
+
+  <!-- External scripts FIRST -->
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+  <script src="./products-loader.js"></script>
+  <script src="./map.js"></script>
+
+  <!-- Page script AFTER external scripts -->
+  <script>
+    const ADMIN_API = "http://localhost:5000";
+    const savedShop = JSON.parse(localStorage.getItem("shopData") || "null");
+    const shopToken = localStorage.getItem("shopToken");
+
+    if (savedShop) {
+      document.getElementById("loggedInShop").textContent = `Logged in as: ${savedShop.name}`;
+    }
+
+    function logoutShop() {
+      localStorage.removeItem("shopToken");
+      localStorage.removeItem("shopData");
+      window.location.href = "shop-login.html";
+    }
+
+    async function loadOrders() {
+      try {
+        const res = await fetch(`${ADMIN_API}/api/orders/admin`, {
+          headers: {
+            Authorization: `Bearer ${shopToken}`
+          }
+        });
+
+        const orders = await res.json();
+        const container = document.getElementById("orders-container");
+
+        if (!res.ok) {
+          container.innerHTML = `<p>${orders.message || "Failed to load orders"}</p>`;
+          return;
+        }
+
+        if (!orders.length) {
+          container.innerHTML = "<p>No orders yet for this shop</p>";
+          return;
+        }
+
+        container.innerHTML = orders.map(order => {
+          const items = order.items
+            .map(i => `${i.name} × ${i.quantity}`)
+            .join("<br>");
+
+          return `
+            <div style="border:1px solid #ddd;border-radius:10px;padding:20px;margin-top:20px;background:#fff">
+              <h3>${order.customerName || "Customer"}</h3>
+              <p><b>Phone:</b> ${order.phone || "N/A"}</p>
+              <p><b>Items:</b><br>${items}</p>
+              <p><b>Total:</b> ₹${order.total}</p>
+              <p><b>Status:</b> ${order.status}</p>
+
+              <button onclick="markReady('${order._id}')"
+                style="padding:8px 14px;background:#52C41A;color:white;border:none;border-radius:6px;cursor:pointer">
+                Mark Ready
+              </button>
+            </div>
+          `;
+        }).join("");
+      } catch (err) {
+        console.error("Order load error:", err);
+      }
+    }
+
+    async function markReady(id) {
+      try {
+        const res = await fetch(`${ADMIN_API}/api/orders/${id}/ready`, {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${shopToken}`
+          }
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          alert(data.message || "Failed to update order");
+          return;
+        }
+
+        alert("Order marked ready");
+
+        if (data.whatsappUrl) {
+          window.open(data.whatsappUrl, "_blank");
+        }
+
+        loadOrders();
+      } catch (err) {
+        console.error("Ready error:", err);
+      }
     }
 
     loadOrders();
-
-  }catch(err){
-
-    console.error("Ready error:",err);
-
-  }
-
-}
-
-
-/* INIT */
-
-loadOrders();
-
-/* AUTO REFRESH EVERY 10s */
-
-setInterval(loadOrders,10000);
-
-</script>
+    setInterval(loadOrders, 10000);
+  </script>
 
 </body>
 </html>

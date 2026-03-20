@@ -1,199 +1,177 @@
-// products-loader.js - Complete E-commerce Implementation
-// CSV/XLSX Upload -> Backend -> Categories -> Products -> Cart
-
+console.log("PAYAL-PRODUCTS-LOADER-123");
 const CART_KEY = "pagariya_cart";
-const ITEMS_PER_PAGE = 5;
 const API_BASE = "http://localhost:5000";
 
-// State
 let allProducts = [];
-let currentCategory = null;
-let currentPage = 1;
 
-// DOM Elements
-let fileUpload, uploadBtn, uploadStatus;
-let categoriesSection, categoriesGrid;
-let categoryModal, modalTitle, modalProducts;
-let modalCloseBtn, paginationContainer, prevBtn, nextBtn, pageNumbers, pageInfo;
-let cartBadge, noProductsMsg;
+let fileUpload;
+let uploadStatus;
+let productsGrid;
+let cartBadge;
+let noProductsMsg;
 
-// ================= INIT =================
 document.addEventListener("DOMContentLoaded", () => {
+  console.log("products-loader.js loaded");
+
   initDOM();
   bindEvents();
   updateCartBadge();
+  loadProductsFromBackend();
 });
 
 function initDOM() {
   fileUpload = document.getElementById("fileUpload");
-  uploadBtn = document.getElementById("uploadBtn");
   uploadStatus = document.getElementById("uploadStatus");
-
-  categoriesSection = document.getElementById("categoriesSection");
-  categoriesGrid = document.getElementById("categoriesGrid");
+  productsGrid = document.getElementById("productsGrid");
+  cartBadge = document.getElementById("cartBadge");
   noProductsMsg = document.getElementById("noProductsMsg");
 
-  categoryModal = document.getElementById("categoryModal");
-  modalTitle = document.getElementById("modalTitle");
-  modalProducts = document.getElementById("modalProducts");
-  modalCloseBtn = document.getElementById("modalCloseBtn");
-
-  paginationContainer = document.getElementById("paginationContainer");
-  prevBtn = document.getElementById("prevBtn");
-  nextBtn = document.getElementById("nextBtn");
-  pageNumbers = document.getElementById("pageNumbers");
-  pageInfo = document.getElementById("pageInfo");
-
-  cartBadge = document.getElementById("cartBadge");
+  console.log("DOM ready:", {
+    fileUpload,
+    uploadStatus,
+    productsGrid,
+    cartBadge,
+    noProductsMsg
+  });
 }
 
 function bindEvents() {
-  uploadBtn.addEventListener("click", () => fileUpload.click());
-  fileUpload.addEventListener("change", handleFileUpload);
-
-  modalCloseBtn.addEventListener("click", closeModal);
-  prevBtn.addEventListener("click", () => goToPage(currentPage - 1));
-  nextBtn.addEventListener("click", () => goToPage(currentPage + 1));
-}
-
-// ================= FILE UPLOAD =================
-async function handleFileUpload() {
-  const file = fileUpload.files[0];
-  if (!file) return;
-
-  if (!/\.(csv|xlsx|xls)$/i.test(file.name)) {
-    setStatus("❌ Only CSV / XLSX allowed", "error");
+  if (!fileUpload) {
+    console.error("fileUpload input not found");
     return;
   }
 
-  setStatus("⏳ Uploading file...", "info");
+  fileUpload.addEventListener("change", async (e) => {
+    console.log("File selected:", e.target.files[0]);
+    await handleFileUpload();
+  });
+}
 
+async function handleFileUpload() {
   try {
-    const fd = new FormData();
-    fd.append("file", file);
+    const file = fileUpload.files[0];
+
+    if (!file) {
+      setStatus("❌ No file selected", "error");
+      return;
+    }
+
+    if (!/\.(xlsx|xls)$/i.test(file.name)) {
+      setStatus("❌ Only XLSX / XLS allowed", "error");
+      return;
+    }
+
+    const token = localStorage.getItem("shopToken");
+
+    if (!token) {
+      setStatus("❌ Shop login required", "error");
+      return;
+    }
+
+    setStatus("⏳ Uploading file...", "info");
+    console.log("Uploading started...");
+
+    const formData = new FormData();
+    formData.append("file", file);
 
     const res = await fetch(`${API_BASE}/api/import/upload-xlsx`, {
       method: "POST",
-      body: fd,
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      body: formData
     });
 
+    console.log("Upload response status:", res.status);
+
     const data = await res.json();
+    console.log("Upload response data:", data);
+
     if (!res.ok || !data.success) {
-      throw new Error(data.error || "Upload failed");
+      throw new Error(data.error || data.message || "Upload failed");
     }
 
-    setStatus(`✅ Uploaded (${data.recordsProcessed} items)`, "success");
+    setStatus(`✅ Uploaded (${data.recordsProcessed} items) for ${data.shop}`, "success");
 
     await loadProductsFromBackend();
-
   } catch (err) {
+    console.error("handleFileUpload error:", err);
     setStatus(`❌ ${err.message}`, "error");
   }
 }
 
-// ================= LOAD PRODUCTS =================
 async function loadProductsFromBackend() {
-  const res = await fetch(`${API_BASE}/api/products`);
-  const data = await res.json();
+  try {
+    const shopData = JSON.parse(localStorage.getItem("shopData") || "null");
 
-  allProducts = data.map((p) => ({
-    id: p._id,
-    name: p.name,
-    size: p.size,
-    price: p.price,
-    stock: p.stock,
-    category: p.category || "Daily Essentials",
-  }));
+    if (!shopData) {
+      console.log("No shopData found");
+      return;
+    }
 
-  if (!allProducts.length) {
-    noProductsMsg.style.display = "block";
+    console.log("Loading products for shop:", shopData.name);
+
+    const res = await fetch(`${API_BASE}/api/products?shop=${encodeURIComponent(shopData.name)}`);
+    const data = await res.json();
+
+    console.log("Products API response:", data);
+
+    allProducts = Array.isArray(data) ? data : [];
+
+    renderProducts();
+  } catch (err) {
+    console.error("loadProductsFromBackend error:", err);
+    setStatus("❌ Failed to load products", "error");
+  }
+}
+
+function renderProducts() {
+  if (!productsGrid) {
+    console.error("productsGrid not found");
     return;
   }
 
-  noProductsMsg.style.display = "none";
-  categoriesSection.style.display = "block";
-  displayCategories();
-}
+  productsGrid.innerHTML = "";
 
-// ================= CATEGORIES =================
-function displayCategories() {
-  categoriesGrid.innerHTML = "";
+  if (!allProducts.length) {
+    if (noProductsMsg) noProductsMsg.style.display = "block";
+    return;
+  }
 
-  const categories = [...new Set(allProducts.map(p => p.category))];
+  if (noProductsMsg) noProductsMsg.style.display = "none";
 
-  categories.forEach(cat => {
-    const count = allProducts.filter(p => p.category === cat).length;
-
+  allProducts.forEach((product) => {
     const card = document.createElement("div");
-    card.className = "category-card";
+    card.className = "product-card";
+
+    const imageSrc =
+      product.image && product.image.trim()
+        ? product.image
+        : "https://via.placeholder.com/220x160?text=No+Image";
+
     card.innerHTML = `
-      <h3>${escapeHtml(cat)}</h3>
-      <p>${count} items</p>
+      <div class="product-image-container">
+        <img src="${imageSrc}" alt="${escapeHtml(product.name)}" class="product-image">
+      </div>
+      <div class="product-info">
+        <h3 class="product-name">${escapeHtml(product.name)}</h3>
+        <p class="product-description">Stock: ${product.quantity ?? 0}</p>
+        <div class="product-footer">
+          <span class="product-price">₹${product.price ?? 0}</span>
+          <button class="add-btn">Add +</button>
+        </div>
+      </div>
     `;
 
-    card.onclick = () => openCategory(cat);
-    categoriesGrid.appendChild(card);
+    const btn = card.querySelector(".add-btn");
+    btn.addEventListener("click", () => addToCart(product));
+
+    productsGrid.appendChild(card);
   });
+
+  console.log("Products rendered:", allProducts.length);
 }
 
-function openCategory(category) {
-  currentCategory = category;
-  currentPage = 1;
-  modalTitle.textContent = category;
-  categoryModal.style.display = "flex";
-  renderProducts();
-}
-
-function closeModal() {
-  categoryModal.style.display = "none";
-}
-
-// ================= PRODUCTS + PAGINATION =================
-function renderProducts() {
-  const products = allProducts.filter(p => p.category === currentCategory);
-  const totalPages = Math.ceil(products.length / ITEMS_PER_PAGE);
-
-  const start = (currentPage - 1) * ITEMS_PER_PAGE;
-  const pageItems = products.slice(start, start + ITEMS_PER_PAGE);
-
-  modalProducts.innerHTML = "";
-  pageItems.forEach(p => modalProducts.appendChild(createProductCard(p)));
-
-  updatePagination(totalPages, products.length);
-}
-
-function updatePagination(totalPages, totalItems) {
-  paginationContainer.style.display = totalPages > 1 ? "flex" : "none";
-  pageInfo.textContent = `Page ${currentPage} of ${totalPages}`;
-
-  prevBtn.disabled = currentPage === 1;
-  nextBtn.disabled = currentPage === totalPages;
-}
-
-function goToPage(page) {
-  currentPage = page;
-  renderProducts();
-}
-
-// ================= PRODUCT CARD =================
-function createProductCard(product) {
-  const card = document.createElement("div");
-  card.className = "product-card";
-
-  card.innerHTML = `
-    <h4>${escapeHtml(product.name)}</h4>
-    <p>${product.size || ""}</p>
-    <p>₹${product.price}</p>
-    <button ${product.stock ? "" : "disabled"}>
-      ${product.stock ? "Add to Cart" : "Out of Stock"}
-    </button>
-  `;
-
-  card.querySelector("button").onclick = () => addToCart(product);
-  return card;
-}
-
-// ================= CART =================
 function getCart() {
   return JSON.parse(localStorage.getItem(CART_KEY)) || [];
 }
@@ -205,30 +183,47 @@ function saveCart(cart) {
 
 function addToCart(product) {
   const cart = getCart();
-  const item = cart.find(i => i.id === product.id);
+  const existing = cart.find((item) => item._id === product._id);
 
-  if (item) item.qty++;
-  else cart.push({ ...product, qty: 1 });
+  if (existing) {
+    existing.qty += 1;
+  } else {
+    cart.push({
+      _id: product._id,
+      name: product.name,
+      price: product.price,
+      image: product.image || "",
+      qty: 1
+    });
+  }
 
   saveCart(cart);
 }
 
 function updateCartBadge() {
-  const total = getCart().reduce((s, i) => s + i.qty, 0);
+  if (!cartBadge) return;
+
+  const total = getCart().reduce((sum, item) => sum + item.qty, 0);
   cartBadge.textContent = total;
 }
 
-// ================= HELPERS =================
 function setStatus(msg, type) {
+  if (!uploadStatus) {
+    console.error("uploadStatus element not found");
+    return;
+  }
+
   uploadStatus.textContent = msg;
   uploadStatus.style.color =
     type === "error" ? "#ff4d4f" :
     type === "success" ? "#52C41A" :
     "#1890ff";
+
+  console.log("STATUS:", msg);
 }
 
 function escapeHtml(text) {
-  const d = document.createElement("div");
-  d.textContent = text;
-  return d.innerHTML;
+  const div = document.createElement("div");
+  div.textContent = text || "";
+  return div.innerHTML;
 }

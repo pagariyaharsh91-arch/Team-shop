@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shop Admin Login</title>
+  <style>
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+      background:#f3f7f2;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      min-height:100vh;
+    }
+
+    .login-box{
+      background:#fff;
+      width:90%;
+      max-width:420px;
+      padding:30px;
+      border-radius:18px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.12);
+    }
+
+    h1{
+      margin:0 0 8px;
+      text-align:center;
+      color:#1f1f1f;
+    }
+
+    p{
+      text-align:center;
+      color:#666;
+      margin-bottom:24px;
+    }
+
+    label{
+      display:block;
+      font-weight:600;
+      margin-bottom:8px;
+      margin-top:14px;
+    }
+
+    input{
+      width:100%;
+      padding:12px;
+      border:1px solid #d9d9d9;
+      border-radius:8px;
+      font-size:15px;
+      box-sizing:border-box;
+    }
+
+    button{
+      width:100%;
+      margin-top:22px;
+      padding:13px;
+      border:none;
+      border-radius:8px;
+      background:#52C41A;
+      color:white;
+      font-size:16px;
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    #status{
+      margin-top:16px;
+      font-size:14px;
+    }
+
+    .test-box{
+      margin-top:20px;
+      color:#777;
+      font-size:14px;
+      line-height:1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-box">
+    <h1>Shop Admin Login</h1>
+    <p>Login to access your shop dashboard</p>
+
+    <form id="loginForm">
+      <label>Email</label>
+      <input type="email" id="email" required />
+
+      <label>Password</label>
+      <input type="password" id="password" required />
+
+      <button type="submit">Login</button>
+    </form>
+
+    <div id="status"></div>
+
+    <div class="test-box">
+      <b>Test logins:</b><br>
+      vishwas@shop.com / 123456<br>
+      pagariya@shop.com / 123456
+    </div>
+  </div>
+
+  <script>
+    const API_BASE = "http://localhost:5000";
+
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const status = document.getElementById("status");
+
+      status.innerHTML = "Logging in...";
+
+      try {
+        const res = await fetch(`${API_BASE}/api/shop-auth/login`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          status.innerHTML = `<span style="color:red;">${data.message || "Login failed"}</span>`;
+          return;
+        }
+
+        localStorage.setItem("shopToken", data.token);
+        localStorage.setItem("shopData", JSON.stringify(data.shop));
+
+        status.innerHTML = `<span style="color:green;">Login successful ✅</span>`;
+
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 800);
+
+      } catch (err) {
+        status.innerHTML = `<span style="color:red;">Server error</span>`;
+      }
+    });
+  </script>
+
+</body>
+</html>
