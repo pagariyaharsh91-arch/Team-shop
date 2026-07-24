@@ -1,197 +1,420 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Pagariya Super Shop - Fresh Groceries Delivered</title>
+
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
-    <!-- Header/Navigation -->
+
+    <!-- ================= HEADER ================= -->
+
     <header class="header sticky-header">
+
         <div class="header-container">
+
+            <!-- LOGO -->
+
             <div class="logo-section">
+
                 <div class="logo-icon">
                     <i class="fas fa-shopping-bag"></i>
                 </div>
-                <span class="brand-name">Pagariya Super Shop</span>
+
+                <span class="brand-name">
+                    Pagariya Super Shop
+                </span>
+
             </div>
 
+
+            <!-- SEARCH BAR -->
+
             <div class="search-section">
-                <input type="text" class="search-bar" placeholder="Search for groceries, staples...">
+
+                <input
+                    type="text"
+                    class="search-bar"
+                    placeholder="Search for groceries, staples..."
+                >
+
                 <button class="search-btn">
                     <i class="fas fa-search"></i>
                 </button>
+
             </div>
+
+
+            <!-- NAVIGATION -->
 
             <div class="nav-right">
+
                 <nav class="nav-links">
-                    <a href="index.html" class="nav-link">Home</a>
-                    <a href="#" class="nav-link">Categories</a>
-                    <a href="offers.html" class="nav-link">Offers</a>
-                    <a href="order.html" class="nav-link">Orders</a>
+
+                    <a href="index.html" class="nav-link">
+                        Home
+                    </a>
+
+                    <a href="#" class="nav-link">
+                        Categories
+                    </a>
+
+                    <a href="offers.html" class="nav-link">
+                        Offers
+                    </a>
+
+                    <a href="order.html" class="nav-link">
+                        Orders
+                    </a>
+
                 </nav>
+
+
+                <!-- ICONS -->
+
                 <div class="icons-section">
-                    <button id="mapBtn" class="icon-btn location-btn" aria-label="Open location">
+
+                    <!-- LOCATION -->
+
+                    <button
+                        id="mapBtn"
+                        class="icon-btn location-btn"
+                        aria-label="Open location"
+                    >
+
                         <i class="fas fa-map-marker-alt"></i>
+
                     </button>
-                    <a href="login.html" class="icon-btn" aria-label="Login">
+
+
+                    <!-- DARK MODE BUTTON -->
+
+                    <button
+                        id="themeToggle"
+                        class="icon-btn"
+                        aria-label="Toggle dark mode"
+                    >
+
+                        <i class="fas fa-moon"></i>
+
+                    </button>
+
+
+                    <!-- LOGIN -->
+
+                    <a
+                        href="login.html"
+                        class="icon-btn"
+                        aria-label="Login"
+                    >
+
                         <i class="fas fa-user"></i>
+
                     </a>
-                    <a href="cart.html" class="cart-btn" id="cartBtn">
+
+
+                    <!-- CART -->
+
+                    <a
+                        href="cart.html"
+                        class="cart-btn"
+                        id="cartBtn"
+                    >
+
                         <i class="fas fa-shopping-cart"></i>
-                        <span class="cart-badge" id="cartBadge">0</span>
+
+                        <span
+                            class="cart-badge"
+                            id="cartBadge"
+                        >
+                            0
+                        </span>
+
                     </a>
+
                 </div>
+
             </div>
+
+
+            <!-- MOBILE MENU -->
 
             <button class="mobile-menu-btn">
+
                 <i class="fas fa-bars"></i>
+
             </button>
+
         </div>
+
     </header>
 
-    <!-- Hero Section -->
+
+    <!-- ================= HERO SECTION ================= -->
+
     <section class="hero">
+
         <div class="hero-content">
-            <h1 class="hero-title">Daily Essentials</h1>
-            <p class="hero-subtitle">Fresh and premium products delivered to your doorstep</p>
+
+            <h1 class="hero-title">
+                Daily Essentials
+            </h1>
+
+            <p class="hero-subtitle">
+                Fresh and premium products delivered to your doorstep
+            </p>
+
         </div>
+
     </section>
 
-    <!-- Product Grid Section -->
+
+    <!-- ================= PRODUCTS SECTION ================= -->
+
     <section class="products-section">
+
         <div class="section-header">
-            <h2 class="section-title">Top Picks for You</h2>
-            <a href="#" class="view-all-link">View all →</a>
+
+            <h2 class="section-title">
+                Top Picks for You
+            </h2>
+
+            <a
+                href="#"
+                class="view-all-link"
+            >
+                View all →
+            </a>
+
         </div>
+
+
+        <!-- PRODUCTS WILL BE LOADED HERE -->
 
         <div class="products-grid">
-            <!-- Product 1: Amul Milk -->
-            <div class="product-card">
-                <div class="product-image-container">
-                    <img src="Shopeefrontend\images\wagh_bakri.png" alt="Amul Milk" onerror="this.src='images/products/placeholder.jpg'" class="product-image">
-                    <div class="badge badge-dairy">DAIRY FRESH</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">Amul Milk</h3>
-                    <p class="product-description">1L Pure Milk</p>
-                    <div class="product-footer">
-                        <span class="product-price">₹28</span>
-                        <button class="add-btn" data-product-id="1" data-product-name="Amul Milk" data-product-price="28">Add +</button>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Product 2: Basmati Rice -->
-            <div class="product-card">
-                <div class="product-image-container">
-                    <img src="images/products/basmati-rice.jpg" alt="Basmati Rice" onerror="this.src='images/products/placeholder.jpg'" class="product-image">
-                    <div class="badge badge-bestseller">BEST SELLER</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">Basmati Rice</h3>
-                    <p class="product-description">Premium Quality</p>
-                    <div class="product-footer">
-                        <span class="product-price">₹120/kg</span>
-                        <button class="add-btn" data-product-id="2" data-product-name="Basmati Rice" data-product-price="120">Add +</button>
-                    </div>
-                </div>
-            </div>
+            <!-- JavaScript will add products here -->
 
-            <!-- Product 3: Toor Dal -->
-            <div class="product-card">
-                <div class="product-image-container">
-                    <img src="images/products/toor-dal.jpg" alt="Toor Dal" onerror="this.src='images/products/placeholder.jpg'" class="product-image">
-                    <div class="badge badge-dairy">DAIRY FRESH</div>
-                </div>
-                <div class="product-info">
-                    <h3 class="product-name">Toor Dal</h3>
-                    <p class="product-description">Premium Grade</p>
-                    <div class="product-footer">
-                        <span class="product-price">₹160/kg</span>
-                        <button class="add-btn" data-product-id="3" data-product-name="Toor Dal" data-product-price="160">Add +</button>
-                    </div>
-                </div>
-            </div>
         </div>
+
     </section>
 
-    <!-- Features Section -->
+
+    <!-- ================= FEATURES SECTION ================= -->
+
     <section class="features-section">
-        <h2 class="features-title">Fresh & Premium Quality Guaranteed</h2>
+
+        <h2 class="features-title">
+            Fresh & Premium Quality Guaranteed
+        </h2>
+
+
         <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-check-circle"></i>
-                </div>
-                <h3 class="feature-name">Quality Assured</h3>
-                <p class="feature-description">Rigorous quality checks</p>
-            </div>
+
+
+            <!-- FEATURE 1 -->
 
             <div class="feature-card">
+
                 <div class="feature-icon">
+
                     <i class="fas fa-check-circle"></i>
+
                 </div>
-                <h3 class="feature-name">Fast Delivery</h3>
-                <p class="feature-description">Within 60 mins delivery</p>
+
+                <h3 class="feature-name">
+                    Quality Assured
+                </h3>
+
+                <p class="feature-description">
+                    Rigorous quality checks
+                </p>
+
             </div>
 
+
+            <!-- FEATURE 2 -->
+
             <div class="feature-card">
+
                 <div class="feature-icon">
+
+                    <i class="fas fa-check-circle"></i>
+
+                </div>
+
+                <h3 class="feature-name">
+                    Fast Delivery
+                </h3>
+
+                <p class="feature-description">
+                    Within 60 mins delivery
+                </p>
+
+            </div>
+
+
+            <!-- FEATURE 3 -->
+
+            <div class="feature-card">
+
+                <div class="feature-icon">
+
                     <i class="fas fa-truck"></i>
+
                 </div>
-                <h3 class="feature-name">Free Shipping</h3>
-                <p class="feature-description">On orders above ₹500</p>
+
+                <h3 class="feature-name">
+                    Free Shipping
+                </h3>
+
+                <p class="feature-description">
+                    On orders above ₹500
+                </p>
+
             </div>
+
         </div>
+
     </section>
 
-      <!-- Footer -->
+
+    <!-- ================= FOOTER ================= -->
+
     <footer class="footer">
+
         <div class="footer-content">
+
+
+            <!-- FOOTER ABOUT -->
+
             <div class="footer-column">
+
                 <div class="footer-logo-section">
+
                     <div class="footer-logo-icon">
+
                         <i class="fas fa-shopping-bag"></i>
+
                     </div>
-                    <h3 class="footer-brand">Pagariya Super Shop</h3>
+
+                    <h3 class="footer-brand">
+                        Pagariya Super Shop
+                    </h3>
+
                 </div>
-                <p class="footer-description">Serving the community with fresh, premium groceries and daily essentials since 1995. Your satisfaction is our priority.</p>
+
+
+                <p class="footer-description">
+
+                    Serving the community with fresh, premium groceries
+                    and daily essentials since 1995.
+                    Your satisfaction is our priority.
+
+                </p>
+
             </div>
 
+
+            <!-- SUPPORT -->
+
             <div class="footer-column">
-                <h4 class="footer-column-title">Support</h4>
+
+                <h4 class="footer-column-title">
+                    Support
+                </h4>
+
                 <ul class="footer-links">
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Returns Policy</a></li>
+
+                    <li>
+                        <a href="#">
+                            Contact Us
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Returns Policy
+                        </a>
+                    </li>
+
                 </ul>
+
             </div>
 
+
+            <!-- SOCIAL MEDIA -->
+
             <div class="footer-column">
-                <h4 class="footer-column-title">Connect</h4>
+
+                <h4 class="footer-column-title">
+                    Connect
+                </h4>
+
+
                 <div class="social-icons">
-                    <a href="#" class="social-link">
+
+                    <a
+                        href="#"
+                        class="social-link"
+                    >
+
                         <i class="fab fa-facebook-f"></i>
-                  
-                    <a href="#" class="social-link">
-                        <i class="fab fa-instagram"></i>
+
                     </a>
-                   
+
+
+                    <a
+                        href="#"
+                        class="social-link"
+                    >
+
+                        <i class="fab fa-instagram"></i>
+
+                    </a>
+
                 </div>
+
             </div>
+
         </div>
+
+
+        <!-- COPYRIGHT -->
 
         <div class="footer-bottom">
-            <p class="copyright">© 2024 Pagariya Super Shop. All rights reserved.</p>
+
+            <p class="copyright">
+
+                © 2024 Pagariya Super Shop.
+                All rights reserved.
+
+            </p>
+
         </div>
+
     </footer>
 
+
+    <!-- ================= JAVASCRIPT ================= -->
+
     <script src="script.js"></script>
+
     <script src="map.js"></script>
+
     <script src="auth-ui.js"></script>
+
     <script src="image-map.js"></script>
 
+
 </body>
+
 </html>

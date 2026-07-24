@@ -2922,3 +2922,370 @@ body {
 .remove-btn:active {
     transform: scale(0.98);
 }
+/* ================= CART ANIMATION ================= */
+
+.cart-bounce {
+    animation: cartBounce 0.5s ease;
+}
+
+
+@keyframes cartBounce {
+
+    0% {
+        transform: scale(1);
+    }
+
+    40% {
+        transform: scale(1.3);
+    }
+
+    70% {
+        transform: scale(0.9);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
+}
+
+
+/* ================= FLYING PRODUCT IMAGE ================= */
+
+.product-image {
+    transition: transform 0.2s ease;
+}
+
+
+.add-btn:active {
+    transform: scale(0.9);
+}
+/* Your existing CSS */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* ... other styles ... */
+
+
+/* ================= DARK MODE ================= */
+/* Add this at the very bottom */
+
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+body.dark-mode .header {
+    background-color: #1e1e1e;
+}
+
+body.dark-mode .nav-link {
+    color: #ffffff;
+}
+
+body.dark-mode .search-bar {
+    background-color: #2a2a2a;
+    color: #ffffff;
+    border-color: #555;
+}
+
+body.dark-mode .search-bar::placeholder {
+    color: #bbbbbb;
+}
+
+body.dark-mode .hero {
+    background-color: #181818;
+}
+
+body.dark-mode .products-section {
+    background-color: #121212;
+}
+
+body.dark-mode .product-card {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+body.dark-mode .product-description {
+    color: #bbbbbb;
+}
+
+body.dark-mode .features-section {
+    background-color: #121212;
+}
+
+body.dark-mode .feature-card {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+body.dark-mode .footer {
+    background-color: #0d0d0d;
+}
+
+body.dark-mode .footer-description,
+body.dark-mode .footer-links a {
+    color: #bbbbbb;
+}
+/* =====================================================
+   DARK MODE
+===================================================== */
+
+body.dark-mode {
+
+    background-color: #121212;
+
+    color: #ffffff;
+
+}
+
+
+/* ================= HEADER ================= */
+
+body.dark-mode .header {
+
+    background-color: #1e1e1e;
+
+    color: #ffffff;
+
+}
+
+
+body.dark-mode .brand-name {
+
+    color: #ffffff;
+
+}
+
+
+body.dark-mode .nav-link {
+
+    color: #ffffff;
+
+}
+
+
+body.dark-mode .icon-btn {
+
+    color: #ffffff;
+
+}
+
+
+/* ================= SEARCH ================= */
+
+body.dark-mode .search-bar {
+
+    background-color: #2b2b2b;
+
+    color: #ffffff;
+
+    border-color: #555555;
+
+}
+
+
+body.dark-mode .search-bar::placeholder {
+
+    color: #bbbbbb;
+
+}
+
+
+body.dark-mode .search-btn {
+
+    background-color: #2b2b2b;
+
+    color: #ffffff;
+
+}
+
+
+/* ================= HERO ================= */
+
+body.dark-mode .hero {
+
+    background-color: #1a1a1a;
+
+}
+
+
+body.dark-mode .hero-title {
+
+    color: #ffffff;
+
+}
+
+
+body.dark-mode .hero-subtitle {
+
+    color: #39d353;
+
+}
+
+
+/* ================= PRODUCTS SECTION ================= */
+
+body.dark-mode .products-section {
+
+    background-color: #121212;
+
+}
+
+
+body.dark-mode .section-title {
+
+    color: #ffffff;
+
+}
+
+
+body.dark-mode .view-all-link {
+
+    color: #39d353;
+
+}
+
+
+/* ================= PRODUCT CARD ================= */
+
+body.dark-mode .product-card {
+
+    background-color: #1e1e1e;
+
+    color: #ffffff;
+
+}
+
+
+body.dark-mode .product-name {
+
+    color: #ffffff;
+
+}
+
+
+body.dark-mode .product-description {
+
+    color: #bbbbbb;
+
+}
+
+
+body.dark-mode .product-price {
+
+    color: #ffffff;
+
+}
+
+
+/* ================= ADD BUTTON ================= */
+
+body.dark-mode .add-btn {
+
+    background-color: #39d353;
+
+    color: #ffffff;
+
+}
+
+
+body.dark-mode .add-btn.added {
+
+    background-color: #2196f3;
+
+}
+
+
+/* ================= FEATURES ================= */
+
+body.dark-mode .features-section {
+
+    background-color: #121212;
+
+}
+
+
+body.dark-mode .features-title {
+
+    color: #ffffff;
+
+}
+
+
+body.dark-mode .feature-card {
+
+    background-color: #1e1e1e;
+
+}
+
+
+body.dark-mode .feature-name {
+
+    color: #ffffff;
+
+}
+
+
+body.dark-mode .feature-description {
+
+    color: #bbbbbb;
+
+}
+
+
+/* ================= FOOTER ================= */
+
+body.dark-mode .footer {
+
+    background-color: #181818;
+
+}
+
+
+body.dark-mode .footer-brand {
+
+    color: #ffffff;
+
+}
+
+
+body.dark-mode .footer-column-title {
+
+    color: #ffffff;
+
+}
+
+
+body.dark-mode .footer-description {
+
+    color: #bbbbbb;
+
+}
+
+
+body.dark-mode .footer-links a {
+
+    color: #bbbbbb;
+
+}
+
+
+body.dark-mode .copyright {
+
+    color: #aaaaaa;
+
+}
+
+
+/* ================= TOAST ================= */
+
+body.dark-mode .toast {
+
+    background-color: #2e7d32;
+
+    color: #ffffff;
+
+}
