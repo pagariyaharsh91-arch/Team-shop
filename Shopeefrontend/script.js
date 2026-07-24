@@ -40,19 +40,24 @@ const themeToggle =
 
 if (mobileMenuBtn && navLinks) {
 
-    mobileMenuBtn.addEventListener("click", () => {
+    mobileMenuBtn.addEventListener(
+        "click",
+        () => {
 
-        if (navLinks.style.display === "none") {
+            if (
+                navLinks.style.display === "none"
+            ) {
 
-            navLinks.style.display = "flex";
+                navLinks.style.display = "flex";
 
-        } else {
+            } else {
 
-            navLinks.style.display = "none";
+                navLinks.style.display = "none";
+
+            }
 
         }
-
-    });
+    );
 
 }
 
@@ -64,7 +69,9 @@ if (mobileMenuBtn && navLinks) {
 function getCartFromStorage() {
 
     return JSON.parse(
-        localStorage.getItem(CART_KEY) || "[]"
+        localStorage.getItem(
+            CART_KEY
+        ) || "[]"
     );
 
 }
@@ -95,12 +102,15 @@ function updateCartBadge() {
 
 
     const badge =
-        document.querySelector(".cart-badge");
+        document.querySelector(
+            ".cart-badge"
+        );
 
 
     if (badge) {
 
-        badge.textContent = total;
+        badge.textContent =
+            total;
 
     }
 
@@ -209,7 +219,9 @@ async function fetchProducts() {
    RENDER PRODUCTS
 ===================================================== */
 
-function renderProducts(products) {
+function renderProducts(
+    products
+) {
 
 
     const container =
@@ -225,10 +237,14 @@ function renderProducts(products) {
     }
 
 
-    container.innerHTML = "";
+    container.innerHTML =
+        "";
 
 
-    if (products.length === 0) {
+    if (
+        products.length === 0
+    ) {
+
 
         container.innerHTML = `
 
@@ -240,167 +256,181 @@ function renderProducts(products) {
 
         `;
 
+
         return;
 
     }
 
 
-    products.forEach(product => {
+    products.forEach(
+        product => {
 
 
-        const card =
-            document.createElement(
-                "div"
-            );
+            const card =
+                document.createElement(
+                    "div"
+                );
 
 
-        card.className =
-            "product-card";
+            card.className =
+                "product-card";
 
 
-        const imagePath =
-            product.image ||
-            "images/products/placeholder.jpg";
+            const imagePath =
+                product.image ||
+                "images/products/placeholder.jpg";
 
 
-        card.innerHTML = `
+            card.innerHTML = `
 
-            <div class="product-image-container">
+                <div class="product-image-container">
 
-                <img
+                    <img
 
-                    src="${imagePath}"
+                        src="${imagePath}"
 
-                    alt="${product.name}"
+                        alt="${product.name}"
 
-                    class="product-image"
-
-                >
-
-                <div class="badge badge-bestseller">
-
-                    NEW
-
-                </div>
-
-            </div>
-
-
-            <div class="product-info">
-
-                <h3 class="product-name">
-
-                    ${product.name}
-
-                </h3>
-
-
-                <p class="product-description">
-
-                    ${
-                        product.quantity > 0
-
-                        ? `Stock: ${product.quantity}`
-
-                        : "Out of Stock"
-
-                    }
-
-                </p>
-
-
-                <div class="product-footer">
-
-
-                    <span class="product-price">
-
-                        ₹${product.price}
-
-                    </span>
-
-
-                    <button
-
-                        class="add-btn"
-
-                        ${
-                            product.quantity <= 0
-                            ? "disabled"
-                            : ""
-                        }
+                        class="product-image"
 
                     >
 
-                        Add +
+                    <div class="badge badge-bestseller">
 
-                    </button>
+                        NEW
 
+                    </div>
 
                 </div>
 
-            </div>
 
-        `;
+                <div class="product-info">
+
+                    <h3 class="product-name">
+
+                        ${product.name}
+
+                    </h3>
 
 
-        container.appendChild(
-            card
-        );
+                    <p class="product-description">
+
+                        ${
+
+                            product.quantity > 0
+
+                            ? `Stock: ${product.quantity}`
+
+                            : "Out of Stock"
+
+                        }
+
+                    </p>
 
 
-        const addButton =
-            card.querySelector(
-                ".add-btn"
+                    <div class="product-footer">
+
+
+                        <span class="product-price">
+
+                            ₹${product.price}
+
+                        </span>
+
+
+                        <button
+
+                            class="add-btn"
+
+                            ${
+
+                                product.quantity <= 0
+
+                                ? "disabled"
+
+                                : ""
+
+                            }
+
+                        >
+
+                            Add +
+
+                        </button>
+
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            container.appendChild(
+                card
             );
 
 
-        if (addButton) {
+            const addButton =
+                card.querySelector(
+                    ".add-btn"
+                );
 
 
-            addButton.addEventListener(
-                "click",
-                () => {
+            if (addButton) {
 
 
-                    addProductToCart(
-                        product
-                    );
+                addButton.addEventListener(
+                    "click",
+                    () => {
 
 
-                    /* BUTTON ANIMATION */
-
-                    addButton.innerHTML =
-                        "✓ Added";
-
-
-                    addButton.classList.add(
-                        "added"
-                    );
+                        // Add product to cart
+                        addProductToCart(
+                            product
+                        );
 
 
-                    setTimeout(
-                        () => {
+                        // Product fly-to-cart animation
+                        animateProductToCart(
+                            card
+                        );
 
 
-                            addButton.innerHTML =
-                                "Add +";
+                        // Button animation
+                        addButton.innerHTML =
+                            "✓ Added";
 
 
-                            addButton.classList.remove(
-                                "added"
-                            );
+                        addButton.classList.add(
+                            "added"
+                        );
 
 
-                        },
-                        1000
-                    );
+                        setTimeout(
+                            () => {
 
-                }
-            );
+
+                                addButton.innerHTML =
+                                    "Add +";
+
+
+                                addButton.classList.remove(
+                                    "added"
+                                );
+
+
+                            },
+                            1000
+                        );
+
+                    }
+                );
+
+            }
 
         }
-
-    });
+    );
 
 }
 
@@ -489,7 +519,7 @@ if (searchButton) {
 
 
 /* =====================================================
-   ENTER KEY SEARCH
+   SEARCH USING ENTER KEY
 ===================================================== */
 
 if (searchBar) {
@@ -509,6 +539,141 @@ if (searchBar) {
             }
 
         }
+    );
+
+}
+
+
+/* =====================================================
+   PRODUCT FLY TO CART ANIMATION
+===================================================== */
+
+function animateProductToCart(
+    productCard
+) {
+
+
+    const productImage =
+        productCard.querySelector(
+            ".product-image"
+        );
+
+
+    const cart =
+        document.querySelector(
+            "#cartBtn"
+        );
+
+
+    if (
+        !productImage ||
+        !cart
+    ) {
+
+        return;
+
+    }
+
+
+    const imageClone =
+        productImage.cloneNode(
+            true
+        );
+
+
+    const imagePosition =
+        productImage.getBoundingClientRect();
+
+
+    const cartPosition =
+        cart.getBoundingClientRect();
+
+
+    imageClone.style.position =
+        "fixed";
+
+
+    imageClone.style.left =
+        `${imagePosition.left}px`;
+
+
+    imageClone.style.top =
+        `${imagePosition.top}px`;
+
+
+    imageClone.style.width =
+        `${imagePosition.width}px`;
+
+
+    imageClone.style.height =
+        `${imagePosition.height}px`;
+
+
+    imageClone.style.zIndex =
+        "9999";
+
+
+    imageClone.style.pointerEvents =
+        "none";
+
+
+    imageClone.style.objectFit =
+        "cover";
+
+
+    imageClone.style.borderRadius =
+        "50%";
+
+
+    imageClone.style.transition =
+        "all 0.8s ease-in-out";
+
+
+    document.body.appendChild(
+        imageClone
+    );
+
+
+    setTimeout(
+        () => {
+
+
+            imageClone.style.left =
+                `${cartPosition.left}px`;
+
+
+            imageClone.style.top =
+                `${cartPosition.top}px`;
+
+
+            imageClone.style.width =
+                "30px";
+
+
+            imageClone.style.height =
+                "30px";
+
+
+            imageClone.style.opacity =
+                "0";
+
+
+            imageClone.style.transform =
+                "rotate(360deg)";
+
+
+        },
+        50
+    );
+
+
+    setTimeout(
+        () => {
+
+            imageClone.remove();
+
+        },
+        850
     );
 
 }
@@ -594,16 +759,22 @@ function addProductToCart(
                     item.id;
 
 
-                return existingId === productId;
+                return (
+                    existingId ===
+                    productId
+                );
 
             }
         );
 
 
-    if (existingProduct) {
+    if (
+        existingProduct
+    ) {
 
 
-        existingProduct.quantity += 1;
+        existingProduct.quantity +=
+            1;
 
 
     } else {
@@ -624,7 +795,8 @@ function addProductToCart(
             image:
                 product.image,
 
-            quantity: 1
+            quantity:
+                1
 
         });
 
@@ -771,10 +943,14 @@ if (themeToggle) {
             );
 
 
-            if (
+            const isDarkMode =
                 document.body.classList.contains(
                     "dark-mode"
-                )
+                );
+
+
+            if (
+                isDarkMode
             ) {
 
 
